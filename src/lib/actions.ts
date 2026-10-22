@@ -25,6 +25,33 @@ export async function signUp(_previous: ActionState, formData: FormData): Promis
   }
 
   const supabase = await createClient();
+  const admin = createAdminClient();
+
+  if (admin) {
+    const { error: createError } = await admin.auth.admin.createUser({
+      email,
+      password,
+      email_confirm: true,
+      user_metadata: { display_name: displayName },
+    });
+    if (createError) {
+      if (/already (been )?registered|already exists/i.test(createError.message)) {
+        return { error: "An account with that email already exists. Sign in instead." };
+      }
+      return { error: createError.message };
+    }
+    const { data: started, error: startError } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+    if (startError || !started.session) {
+      return {
+        error: "Your account was created. Sign in with the same email and password to continue.",
+      };
+    }
+    redirect("/onboarding");
+  }
+
   const { data, error } = await supabase.auth.signUp({
     email,
     password,
@@ -34,8 +61,7 @@ export async function signUp(_previous: ActionState, formData: FormData): Promis
   if (error) return { error: error.message };
   if (!data.session) {
     return {
-      error:
-        "Account created, but sign-in did not start. In the local Supabase config, keep email confirmation turned off.",
+      error: "Your account was created. Sign in with the same email and password to continue.",
     };
   }
 
@@ -46,7 +72,18 @@ export async function signIn(_previous: ActionState, formData: FormData): Promis
   const email = String(formData.get("email") || "").trim();
   const password = String(formData.get("password") || "");
   const supabase = await createClient();
-  const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+  let { data, error } = await supabase.auth.signInWithPassword({ email, password });
+
+  if (!data.session && isUnconfirmedEmailError(error?.code, error?.message)) {
+    const userId = await findUserIdByEmail(email);
+    if (userId) {
+      const retry = await confirmEmailAndSignIn(supabase, userId, email, password);
+      if (retry) {
+        data = retry;
+        error = null;
+      }
+    }
+  }
 
   if (error || !data.user) return { error: "Email or password is incorrect." };
 
@@ -357,4 +394,42 @@ async function findTreatmentId(
   return {
     id: data?.find((item) => item.name.toLowerCase() === name.toLowerCase())?.id,
   };
+}
+
+function createAdminClient() {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!url || !serviceKey) return null;
+  return createServiceClient(url, serviceKey, {
+    auth: { autoRefreshToken: false, persistSession: false },
+  });
+}
+
+function isUnconfirmedEmailError(code?: string, message?: string) {
+  return code === "email_not_confirmed" || /not confirmed/i.test(message ?? "");
+}
+
+async function findUserIdByEmail(email: string) {
+  const admin = createAdminClient();
+  if (!admin) return null;
+  const { data, error } = await admin.auth.admin.listUsers({ page: 1, perPage: 1000 });
+  if (error) return null;
+  return data.users.find((user) => user.email?.toLowerCase() === email.toLowerCase())?.id ?? null;
+}
+
+async function confirmEmailAndSignIn(
+  supabase: Awaited<ReturnType<typeof createClient>>,
+  userId: string,
+  email: string,
+  password: string,
+) {
+  const admin = createAdminClient();
+  if (!admin) return null;
+  const { error: confirmError } = await admin.auth.admin.updateUserById(userId, {
+    email_confirm: true,
+  });
+  if (confirmError) return null;
+  const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+  if (error || !data.session || !data.user) return null;
+  return data;
 }

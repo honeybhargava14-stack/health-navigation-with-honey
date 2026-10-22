@@ -14,7 +14,7 @@ This site is not for health emergencies. If you need urgent care, contact a near
 
 1. Create a Supabase project.
 2. In the SQL Editor, run [`supabase/migrations/20261019120000_health_intelligence.sql`](supabase/migrations/20261019120000_health_intelligence.sql).
-3. In Authentication → URL Configuration, set the Site URL to your Vercel origin (`https://your-app.vercel.app`) and add that origin to Redirect URLs. Turn email confirmation on for a public site.
+3. In Authentication → URL Configuration, set the Site URL to your Vercel origin (`https://your-app.vercel.app`) and add that origin to Redirect URLs. Keep Confirm email off so Create account signs in immediately.
 4. Copy the Project URL, anon key, and service role key from Project Settings → API.
 
 Set these on the Vercel project (Production and Preview):
