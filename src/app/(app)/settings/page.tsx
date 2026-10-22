@@ -34,7 +34,7 @@ async function SettingsContent({
 
   return (
     <div className="flex flex-col gap-5">
-      <h1 className="text-3xl font-semibold">Settings</h1>
+      <h1 className="font-serif text-3xl font-semibold">Settings</h1>
       {saved === "investigation" ? (
         <p className="rounded-2xl bg-accent px-4 py-3 text-sm" role="status">
           Investigation saved.

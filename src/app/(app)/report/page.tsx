@@ -30,8 +30,8 @@ async function ReportContent() {
   return (
     <article className="flex flex-col gap-5">
       <header>
-        <p className="text-sm font-medium text-primary print:text-black">Health Intelligence</p>
-        <h1 className="mt-2 text-3xl font-semibold">14-day health report</h1>
+        <p className="text-sm font-medium text-primary print:text-black">Health Navigation with Honey</p>
+        <h1 className="font-serif mt-2 text-3xl font-semibold">14-day health report</h1>
         <p className="mt-2 text-sm leading-6 text-muted">
           {formatDate(report.rangeStart)} to {formatDate(report.rangeEnd)}
         </p>

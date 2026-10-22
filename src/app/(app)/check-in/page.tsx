@@ -28,7 +28,7 @@ async function CheckInContent() {
   return (
     <div className="flex flex-col gap-5">
       <div>
-        <h1 className="text-3xl font-semibold">Today</h1>
+        <h1 className="font-serif text-3xl font-semibold">Today</h1>
         <p className="mt-2 text-sm leading-6 text-muted">
           {formatDate(today)}
           {investigation ? `, ${investigation.symptomLabel}` : ""}

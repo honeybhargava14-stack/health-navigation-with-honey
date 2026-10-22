@@ -1,7 +1,8 @@
+import { SITE_NAME } from "@/lib/site";
 import { SignOutButton } from "@/components/account-actions";
 import { InvestigationForm } from "@/components/investigation-form";
 import { getInvestigation, getProfile, requireUser } from "@/lib/data";
-import { Card, SafetyNotice } from "@health/ui";
+import { BackToWebsite, Card, SafetyNotice } from "@health/ui";
 import type { Metadata } from "next";
 import { Suspense } from "react";
 
@@ -12,9 +13,10 @@ export default function OnboardingPage() {
     <main className="mx-auto flex w-full max-w-lg flex-col gap-6 px-5 py-8">
       <div className="flex items-start justify-between gap-4">
         <div>
-          <p className="text-sm font-medium text-primary">Health Intelligence</p>
-          <h1 className="mt-2 text-3xl font-semibold">Your investigation</h1>
+          <p className="text-sm font-medium text-primary">{SITE_NAME}</p>
+          <h1 className="font-serif mt-2 text-3xl font-semibold">Your investigation</h1>
         </div>
+        <BackToWebsite />
       </div>
       <SafetyNotice />
       <Suspense fallback={<p className="text-sm text-muted">Loading your account...</p>}>

@@ -1,8 +1,8 @@
-# Health Intelligence
+# Health Navigation with Honey
 
-A web app for logging one recurring symptom, noticing correlations in that log, and preparing a 14-day summary for a clinician.
+A personal website and web app for logging one recurring symptom, noticing correlations in that log, and preparing a 14-day summary for a clinician.
 
-Health Intelligence does not diagnose conditions or prescribe treatment. Patterns are correlations in what you recorded. They do not show cause.
+This site is not for health emergencies. If you need urgent care, contact a nearby healthcare provider or emergency services. It does not diagnose conditions or prescribe treatment. Patterns are correlations in what you recorded. They do not show cause.
 
 ## What you need
 

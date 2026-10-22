@@ -55,11 +55,11 @@ export async function updateSession(request: NextRequest) {
 
   const onboarded = profile?.onboarding_complete === true;
 
-  if (!onboarded && !isOnboarding) {
+  if (!onboarded && isApp) {
     return redirectTo(request, "/onboarding", supabaseResponse);
   }
 
-  if (onboarded && (isOnboarding || isAuthPage || path === "/")) {
+  if (onboarded && (isOnboarding || isAuthPage)) {
     return redirectTo(request, "/dashboard", supabaseResponse);
   }
 
