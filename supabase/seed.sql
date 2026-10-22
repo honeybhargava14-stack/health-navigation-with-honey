@@ -1,0 +1,1 @@
+-- Accounts and health logs are created in the app. This file stays empty on purpose.
