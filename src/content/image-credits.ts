@@ -29,22 +29,26 @@ export const IMAGE_CREDITS = [
   },
   {
     file: "/images/story-journaling.jpg",
-    credit: "Editorial lifestyle image for My Story journaling section",
+    credit: "Editorial symptom journal still life for My Story",
   },
   {
     file: "/images/understand-desk.jpg",
-    credit: "Editorial still life for health information organisation",
+    credit: "Editorial organised health papers for Understand stage",
   },
   {
     file: "/images/explore-workspace.jpg",
-    credit: "Editorial workspace image for exploring health information",
+    credit: "Editorial care timeline workspace for Explore stage",
   },
   {
     file: "/images/navigate-conversation.jpg",
-    credit: "Editorial conversation image for healthcare navigation",
+    credit: "Editorial supportive conversation for Navigate stage",
   },
   {
     file: "/images/closing-light.jpg",
-    credit: "Editorial atmosphere image for closing About Me section",
+    credit: "Editorial sunrise reading nook for closing CTA atmosphere",
+  },
+  {
+    file: "/images/tool-doorway.jpg",
+    credit: "Editorial health tracker notebook for Health Navigation tool page",
   },
 ] as const;

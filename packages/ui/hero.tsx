@@ -13,11 +13,16 @@ type HeroProps = {
     alt: string;
     imageClassName?: string;
     fit?: "cover" | "contain";
+    mode?: "framed" | "natural";
+    width?: number;
+    height?: number;
     frameClassName?: string;
   };
 };
 
 export function Hero({ eyebrow, title, description, actions, footer, image }: HeroProps) {
+  const isNatural = image.mode === "natural";
+
   return (
     <section className="relative overflow-hidden">
       <div
@@ -28,7 +33,7 @@ export function Hero({ eyebrow, title, description, actions, footer, image }: He
         aria-hidden="true"
         className="pointer-events-none absolute top-40 -right-10 h-64 w-64 rounded-full bg-rose/20 blur-2xl"
       />
-      <div className="relative mx-auto grid w-full max-w-6xl items-center gap-10 px-5 py-16 md:grid-cols-[minmax(0,0.9fr)_minmax(0,1.2fr)] md:gap-12 md:py-24 lg:max-w-7xl">
+      <div className="relative mx-auto grid w-full max-w-6xl items-center gap-10 px-5 py-16 md:grid-cols-[minmax(0,0.85fr)_minmax(0,1.25fr)] md:gap-12 md:py-20 lg:max-w-7xl">
         <div className="flex flex-col gap-6">
           {eyebrow ? (
             <p className="text-sm font-medium tracking-wide text-primary uppercase">{eyebrow}</p>
@@ -45,10 +50,16 @@ export function Hero({ eyebrow, title, description, actions, footer, image }: He
           alt={image.alt}
           imageClassName={image.imageClassName}
           fit={image.fit}
+          mode={image.mode}
+          width={image.width}
+          height={image.height}
           priority
-          sizes="(min-width: 1024px) 48vw, 100vw"
+          sizes="(min-width: 1024px) 52vw, 100vw"
           className={
-            image.frameClassName ?? "aspect-[4/5] min-h-80 md:aspect-[5/6]"
+            image.frameClassName ??
+            (isNatural
+              ? "w-full max-w-xl justify-self-center md:max-w-none md:justify-self-stretch"
+              : "aspect-[4/5] min-h-80 md:aspect-[5/6]")
           }
         />
       </div>

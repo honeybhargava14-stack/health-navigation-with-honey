@@ -69,12 +69,13 @@ export default function HomePage() {
           </div>
         }
         image={{
-          // Personal portrait of Honey Bhargava for the landing hero.
+          // Personal portrait of Honey Bhargava for the landing hero. Original photo, no crop.
           src: "/images/honey-portrait.jpg",
           alt: `Portrait of ${AUTHOR_NAME}, Health Navigator and Founder`,
-          fit: "contain",
-          frameClassName:
-            "aspect-[9/16] min-h-[32rem] w-full md:min-h-[40rem] lg:min-h-[44rem]",
+          mode: "natural",
+          width: 576,
+          height: 1024,
+          frameClassName: "w-full max-w-md justify-self-center md:max-w-lg lg:max-w-xl md:justify-self-end",
         }}
       />
 

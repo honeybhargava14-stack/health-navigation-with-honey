@@ -64,7 +64,7 @@ const stages = [
     body: "Organise symptoms, health history, reports, and unanswered questions, so your healthcare journey starts to feel clearer in your own hands.",
     image: {
       src: "/images/understand-desk.jpg",
-      alt: "A health journal, notes, and a pen on a warm wooden desk in soft sunlight",
+      alt: "Organised medical papers, folders, and notes on a warm desk for understanding health information",
     },
   },
   {
@@ -73,7 +73,7 @@ const stages = [
     body: "Notice patterns, gather relevant information, and prepare questions you can bring to qualified healthcare professionals.",
     image: {
       src: "/images/explore-workspace.jpg",
-      alt: "Someone reviewing health information on a laptop at a calm home workspace",
+      alt: "Hands reviewing a care timeline beside a laptop in a peaceful home workspace",
     },
   },
   {
@@ -82,7 +82,7 @@ const stages = [
     body: "Build a more structured path for consultations, follow-ups, and informed healthcare decisions, one step at a time.",
     image: {
       src: "/images/navigate-conversation.jpg",
-      alt: "Two people in a warm, welcoming conversation about care",
+      alt: "Two people sharing a calm supportive conversation at a kitchen table",
     },
   },
 ];
@@ -173,12 +173,13 @@ export default function MyStoryPage() {
           </div>
         }
         image={{
-          // Personal portrait of Honey Bhargava. Replace this file to update the hero photo.
+          // Personal portrait of Honey Bhargava. Original photo, no crop.
           src: "/images/honey-portrait.jpg",
           alt: `Portrait of ${AUTHOR_NAME}, Health Navigator and Founder`,
-          fit: "contain",
-          frameClassName:
-            "aspect-[9/16] min-h-[32rem] w-full md:min-h-[40rem] lg:min-h-[44rem]",
+          mode: "natural",
+          width: 576,
+          height: 1024,
+          frameClassName: "w-full max-w-md justify-self-center md:max-w-lg lg:max-w-xl md:justify-self-end",
         }}
       />
 
@@ -212,8 +213,9 @@ export default function MyStoryPage() {
           </div>
           <ImageFrame
             src="/images/story-journaling.jpg"
-            alt="A woman journaling beside a sunlit window in a calm, neutral room"
-            className="aspect-[4/5]"
+            alt="An open symptom journal with handwritten notes and tea in soft morning light"
+            className="aspect-[4/3]"
+            fit="contain"
           />
         </div>
       </EditorialSection>
@@ -248,6 +250,7 @@ export default function MyStoryPage() {
                 src={stage.image.src}
                 alt={stage.image.alt}
                 className="aspect-[4/3]"
+                fit="contain"
                 sizes="(min-width: 768px) 30vw, 100vw"
               />
               <p className="text-sm font-medium tracking-wide text-primary uppercase">
@@ -310,8 +313,10 @@ export default function MyStoryPage() {
             <ImageFrame
               src="/images/honey-portrait.jpg"
               alt={`Portrait of ${AUTHOR_NAME}`}
-              className="aspect-[9/16] min-h-[28rem] w-full md:min-h-[34rem]"
-              fit="contain"
+              mode="natural"
+              width={576}
+              height={1024}
+              className="w-full max-w-md"
               priority={false}
             />
             <figcaption className="mt-3 text-sm text-muted">
@@ -368,8 +373,9 @@ export default function MyStoryPage() {
         <div className="mb-10 overflow-hidden rounded-3xl">
           <ImageFrame
             src="/images/closing-light.jpg"
-            alt="Sunlight through linen curtains in a peaceful room with plants and warm textures"
-            className="aspect-[21/9] min-h-48"
+            alt="Soft sunrise light through sheer curtains onto a quiet reading chair"
+            className="aspect-[16/9] min-h-48"
+            fit="contain"
             sizes="100vw"
           />
         </div>

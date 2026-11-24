@@ -56,9 +56,10 @@ export default function HealthNavigationPage() {
           </div>
           <div className="flex flex-col gap-5">
             <ImageFrame
-              src="/images/journal.jpg"
-              alt="Open notebook with a pen, ready for notes"
-              className="aspect-[4/5]"
+              src="/images/tool-doorway.jpg"
+              alt="A personal health tracker notebook and phone on a calm beige desk"
+              className="aspect-[3/4]"
+              fit="contain"
               priority
             />
             <div className="rounded-3xl border border-dashed border-border bg-card p-6">
