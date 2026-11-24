@@ -1,5 +1,6 @@
 export const SITE_NAME = "Health Navigation with Honey";
-export const SITE_WORDMARK = "healthnavigationwithhoney";
+export const SITE_BRAND = "I am here for you...";
+export const SITE_WORDMARK = "Health Navigation with Honey";
 export const AUTHOR_NAME = "Honey Bhargava";
 
 export const SITE_DESCRIPTION =
