@@ -1,5 +1,5 @@
 import { formatResourceDate, resources } from "@/content/resources";
-import { SITE_NAME } from "@/lib/site";
+import { AUTHOR_NAME, SITE_NAME } from "@/lib/site";
 import {
   buttonClass,
   Card,
@@ -19,11 +19,11 @@ export const metadata: Metadata = {
 const helpCards = [
   {
     title: "Understand",
-    body: "Organize symptoms, experiences, and the questions you want to keep close, without having to turn them into a finished story.",
+    body: "Gather your symptoms, experiences, and unanswered questions, without needing a finished story first.",
   },
   {
     title: "Discover patterns",
-    body: "Track relevant changes over time and prepare a short summary you can look at with a clinician. A pattern in your notes is a correlation, not proof of cause.",
+    body: "Notice what changes over time, and prepare a short summary you can bring to a clinician. A pattern in your notes is a correlation, not proof of cause.",
   },
   {
     title: "Navigate healthcare",
@@ -40,11 +40,17 @@ export default function HomePage() {
         eyebrow={SITE_NAME}
         title="Your health journey deserves more clarity, care, and understanding."
         description={
-          <p>
-            Navigating health concerns can feel overwhelming. This is a personal space for making
-            sense of your experiences, preparing for conversations, and taking small, steady steps
-            toward feeling more informed. You deserve to be heard, understood, and supported.
-          </p>
+          <>
+            <p>
+              Navigating health concerns can feel overwhelming. The waiting. The uncertainty. The
+              quiet work of trying to be believed.
+            </p>
+            <p className="mt-4">
+              This is a personal space for making sense of your experiences, preparing for
+              conversations, and taking small, steady steps toward feeling more informed. You
+              deserve to be heard, understood, and supported.
+            </p>
+          </>
         }
         actions={
           <>
@@ -56,9 +62,17 @@ export default function HomePage() {
             </Link>
           </>
         }
+        footer={
+          <div>
+            <p className="font-serif text-xl font-semibold text-foreground">{AUTHOR_NAME}</p>
+            <p className="mt-1 text-sm text-muted">Health Navigator &amp; Founder</p>
+          </div>
+        }
         image={{
-          src: "/images/window-light.jpg",
-          alt: "A quiet bedroom filled with daylight from two windows",
+          // Personal portrait of Honey Bhargava for the landing hero.
+          src: "/images/honey-portrait.jpg",
+          alt: `Portrait of ${AUTHOR_NAME}, Health Navigator and Founder`,
+          imageClassName: "object-top",
         }}
       />
 
@@ -88,14 +102,14 @@ export default function HomePage() {
       >
         <div className="max-w-3xl space-y-5 text-lg leading-8 text-muted">
           <p>
-            I have been living with chronic pain and with the uncertainty that comes from trying to
-            understand symptoms, find language for them, and be taken seriously in short
+            I have been living with chronic pain, and with the uncertainty that comes from trying
+            to understand symptoms, find language for them, and be taken seriously in short
             appointments. That lived experience is why I care about health navigation.
           </p>
           <p>
-            What I can say now is this: the practical parts and the emotional parts arrived
-            together. I wanted a calmer way to keep track of what I was experiencing, and a
-            kinder way to walk into healthcare conversations.
+            The practical parts and the emotional parts arrived together. I wanted a calmer way to
+            keep track of what I was experiencing, and a kinder way to walk into healthcare
+            conversations.
           </p>
           <p>
             That is why this site exists. It is a place for my story, for resources I wish I had

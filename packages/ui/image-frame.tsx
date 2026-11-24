@@ -7,6 +7,8 @@ type ImageFrameProps = {
   src: string;
   alt: string;
   className?: string;
+  /** Extra classes for the img (e.g. object-top for portraits). */
+  imageClassName?: string;
   priority?: boolean;
   sizes?: string;
 };
@@ -15,6 +17,7 @@ export function ImageFrame({
   src,
   alt,
   className = "",
+  imageClassName = "",
   priority = false,
   sizes = "(min-width: 1024px) 42vw, 100vw",
 }: ImageFrameProps) {
@@ -31,7 +34,7 @@ export function ImageFrame({
           fill
           priority={priority}
           sizes={sizes}
-          className="object-cover"
+          className={`object-cover ${imageClassName}`}
           onError={() => setFailed(true)}
         />
       )}

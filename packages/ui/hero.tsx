@@ -8,7 +8,7 @@ type HeroProps = {
   actions: ReactNode;
   /** Optional content below actions (e.g. name and designation). */
   footer?: ReactNode;
-  image: { src: string; alt: string };
+  image: { src: string; alt: string; imageClassName?: string };
 };
 
 export function Hero({ eyebrow, title, description, actions, footer, image }: HeroProps) {
@@ -37,6 +37,7 @@ export function Hero({ eyebrow, title, description, actions, footer, image }: He
         <ImageFrame
           src={image.src}
           alt={image.alt}
+          imageClassName={image.imageClassName}
           priority
           className="aspect-[4/5] min-h-80 md:aspect-[5/6]"
         />
