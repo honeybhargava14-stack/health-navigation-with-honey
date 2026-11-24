@@ -1,6 +1,5 @@
 "use client";
 
-import { PAIN_PREFILL_MESSAGE } from "@/lib/pain-guidance";
 import { ChatBubble, Button, TextArea } from "@health/ui";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -96,7 +95,7 @@ export function HoneyChat({
         name="message"
         value={input}
         onChange={(event) => setInput(event.target.value)}
-        placeholder={PAIN_PREFILL_MESSAGE}
+        placeholder="I have been tired and my head hurts…"
         rows={3}
       />
       <Button type="button" onClick={send} disabled={pending || !input.trim()}>

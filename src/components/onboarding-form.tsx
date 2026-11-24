@@ -1,6 +1,5 @@
 "use client";
 
-import { SoftHoneyNudge } from "@/components/soft-honey-nudge";
 import { completeOnboarding } from "@/lib/actions";
 import { initialActionState } from "@/lib/action-state";
 import {
@@ -11,7 +10,6 @@ import {
   DURATION_OPTIONS,
   SYMPTOM_CATEGORY_OPTIONS,
 } from "@/lib/constants";
-import { markPainSoftNudge } from "@/lib/pain-guidance";
 import { Button, FormError } from "@health/ui";
 import { useActionState, useState } from "react";
 
@@ -61,7 +59,7 @@ export function OnboardingForm({ displayName = "" }: { displayName?: string }) {
       ))}
 
       {step === 0 ? (
-        <div className="flex flex-col gap-4" data-suppress-pain-prompt="">
+        <div className="flex flex-col gap-4">
           <p className="text-sm leading-6 text-muted">
             Hi. I am Honey. This space is for you to be heard, gently and without rush.
           </p>
@@ -275,13 +273,7 @@ export function OnboardingForm({ displayName = "" }: { displayName?: string }) {
             <Button type="button" variant="secondary" onClick={() => setStep(1)}>
               Back
             </Button>
-            <Button
-              type="button"
-              onClick={() => {
-                markPainSoftNudge();
-                setStep(3);
-              }}
-            >
+            <Button type="button" onClick={() => setStep(3)}>
               Continue
             </Button>
           </div>
@@ -295,7 +287,6 @@ export function OnboardingForm({ displayName = "" }: { displayName?: string }) {
             Honey will check in with you gently. You can speak or type. Your words stay with your
             account, and you can leave whenever you need a pause.
           </p>
-          <SoftHoneyNudge show />
           <div className="flex gap-2">
             <Button type="button" variant="secondary" onClick={() => setStep(2)}>
               Back

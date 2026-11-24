@@ -1,6 +1,5 @@
 import { DeleteAccountForm, SignOutButton } from "@/components/account-actions";
 import { PushSettings } from "@/components/push-settings";
-import { SoftHoneyNudge } from "@/components/soft-honey-nudge";
 import { SymptomManager } from "@/components/symptom-manager";
 import { TreatmentManager } from "@/components/treatment-manager";
 import { getProfile, getSymptoms, getTreatments, requireUser } from "@/lib/data";
@@ -46,7 +45,6 @@ async function SettingsContent({
           Symptom saved.
         </p>
       ) : null}
-      <SoftHoneyNudge show={saved === "symptom"} />
       <Card title="Symptoms you track">
         <SymptomManager symptoms={symptoms.filter((symptom) => symptom.active)} />
       </Card>

@@ -1,52 +1,5 @@
 export const PAIN_ASSESSMENT_URL = "https://www.paindoctorbangalore.com/pain-assessment";
 
-export const PAIN_PREFILL_MESSAGE = "I have pain.";
-
-export const PAIN_CONTINUE_HERE_KEY = "honey-pain-continue-here";
-export const PAIN_NUDGE_KEY = "honey-pain-soft-nudge";
-
-export const HONEY_PAIN_HREF = `/honey?prefill=${encodeURIComponent(PAIN_PREFILL_MESSAGE)}`;
-
-export const PAIN_POPUP = {
-  title: "You do not have to carry this alone",
-  body: [
-    "Pain can wear you down quietly.",
-    "You do not have to suffer through it by yourself.",
-    "Honey can sit with you, help you put words to what you feel, and walk through gentle next steps when you are ready.",
-  ].join(" "),
-  talkCta: "Talk to Honey",
-  continueCta: "Continue here first",
-} as const;
-
-export function markPainContinueHere() {
-  if (typeof window === "undefined") return;
-  window.sessionStorage.setItem(PAIN_CONTINUE_HERE_KEY, "1");
-}
-
-export function clearPainContinueHere() {
-  if (typeof window === "undefined") return;
-  window.sessionStorage.removeItem(PAIN_CONTINUE_HERE_KEY);
-  window.sessionStorage.removeItem(PAIN_NUDGE_KEY);
-}
-
-export function hasPainContinueHere() {
-  if (typeof window === "undefined") return false;
-  return window.sessionStorage.getItem(PAIN_CONTINUE_HERE_KEY) === "1";
-}
-
-export function markPainSoftNudge() {
-  if (typeof window === "undefined") return;
-  if (!hasPainContinueHere()) return;
-  window.sessionStorage.setItem(PAIN_NUDGE_KEY, "1");
-}
-
-export function consumePainSoftNudge() {
-  if (typeof window === "undefined") return false;
-  if (window.sessionStorage.getItem(PAIN_NUDGE_KEY) !== "1") return false;
-  window.sessionStorage.removeItem(PAIN_NUDGE_KEY);
-  return true;
-}
-
 /** Extra system guidance for Honey when navigating pain conversations. */
 export const HONEY_PAIN_GUIDANCE = `
 When the person mentions pain, aching, soreness, hurting, headache, migraine, or similar:
