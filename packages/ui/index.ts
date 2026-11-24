@@ -12,6 +12,7 @@ export { FormError } from "./form-error";
 export { Hero } from "./hero";
 export { ImageFrame } from "./image-frame";
 export { MicButton } from "./mic-button";
+export { Modal } from "./modal";
 export { MonthCalendar } from "./month-calendar";
 export { PageIntro } from "./page-intro";
 export { RangeTabs } from "./range-tabs";

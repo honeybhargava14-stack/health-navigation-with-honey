@@ -1,7 +1,14 @@
+import { buildPainConversationReply } from "@/lib/pain-guidance";
+
 const URGENT =
   /\b(chest pain|can'?t breathe|cannot breathe|suicidal|kill myself|overdose|stroke|unconscious|severe bleeding|emergency)\b/i;
 
-export function buildHoneyFallbackReply(message: string): string {
+type HistoryMessage = { role: "user" | "assistant"; content: string };
+
+export function buildHoneyFallbackReply(
+  message: string,
+  history: HistoryMessage[] = [],
+): string {
   const text = message.trim();
 
   if (URGENT.test(text)) {
@@ -12,28 +19,14 @@ export function buildHoneyFallbackReply(message: string): string {
     ].join(" ");
   }
 
-  if (/\b(headache|head hurts|migraine)\b/i.test(text)) {
-    return [
-      "I'm sorry your head hurts. That can feel exhausting and hard to explain.",
-      "I don't diagnose or tell you what treatment to take.",
-      "If you want, we can gently log how strong it feels, when it started, and what questions you want to ask a clinician.",
-      "Would you like me to help turn this into a short check-in note?",
-    ].join(" ");
-  }
+  const painReply = buildPainConversationReply(text, history);
+  if (painReply) return painReply;
 
   if (/\b(tired|fatigue|exhausted|no energy)\b/i.test(text)) {
     return [
       "Feeling tired like that is real, and it deserves space.",
       "I can help you record energy, sleep, and anything else you noticed today so the picture is clearer later.",
       "I won't guess a medical cause. What would feel most useful right now: logging today, or preparing questions for a visit?",
-    ].join(" ");
-  }
-
-  if (/\b(pain|hurts|ache|sore)\b/i.test(text)) {
-    return [
-      "Thank you for telling me. Pain is hard to carry alone.",
-      "I can help you note where it is, how intense it feels, and what you have already tried.",
-      "That kind of record can make a clinician conversation feel less rushed. Want to start a short symptom note together?",
     ].join(" ");
   }
 

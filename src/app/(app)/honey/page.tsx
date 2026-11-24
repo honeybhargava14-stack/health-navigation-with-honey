@@ -6,16 +6,24 @@ import { Suspense } from "react";
 
 export const metadata: Metadata = { title: "Honey" };
 
-export default function HoneyPage() {
+export default function HoneyPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ prefill?: string }>;
+}) {
   return (
     <Suspense fallback={<p className="text-sm text-muted">Opening Honey...</p>}>
-      <HoneyContent />
+      <HoneyContent searchParams={searchParams} />
     </Suspense>
   );
 }
 
-async function HoneyContent() {
-  const { supabase, user } = await requireUser();
+async function HoneyContent({
+  searchParams,
+}: {
+  searchParams: Promise<{ prefill?: string }>;
+}) {
+  const [{ prefill }, { supabase, user }] = await Promise.all([searchParams, requireUser()]);
   const messages = await getChatMessages(supabase, user.id);
 
   return (
@@ -29,12 +37,12 @@ async function HoneyContent() {
       <SafetyNotice />
       <DisclaimerNotice />
       <aside className="rounded-2xl border border-border bg-card px-4 py-3 text-sm leading-6 text-muted">
-        If full AI replies are temporarily unavailable, Honey still answers with a gentle guided
-        fallback so you are never left with an empty chat. Unlock Vercel AI Gateway billing to
-        restore the full AI companion.
+        If you are in pain, Honey can guide you gently here and help you prepare for a calmer next
+        step. She does not diagnose or treat.
       </aside>
       <Card>
         <HoneyChat
+          initialPrefill={typeof prefill === "string" ? prefill : ""}
           initialMessages={messages
             .filter((message) => message.role === "user" || message.role === "assistant")
             .map((message) => ({

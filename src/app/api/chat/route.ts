@@ -39,12 +39,6 @@ export async function POST(request: Request) {
     content: message,
   });
 
-  if (!process.env.AI_GATEWAY_API_KEY) {
-    const fallback = buildHoneyFallbackReply(message);
-    await saveAssistantReply(supabase, user.id, fallback);
-    return NextResponse.json({ text: fallback, mode: "fallback" });
-  }
-
   const { data: history } = await supabase
     .from("chat_messages")
     .select("role, content")
@@ -58,6 +52,12 @@ export async function POST(request: Request) {
       role: row.role as "user" | "assistant",
       content: row.content,
     }));
+
+  if (!process.env.AI_GATEWAY_API_KEY) {
+    const fallback = buildHoneyFallbackReply(message, messages);
+    await saveAssistantReply(supabase, user.id, fallback);
+    return NextResponse.json({ text: fallback, mode: "fallback" });
+  }
 
   try {
     const { text } = await generateText({
@@ -180,7 +180,7 @@ Confirm gently what you saved. Today is ${todayLocal()}.`,
 
     // Keep Honey responsive when AI Gateway billing is locked.
     if (isGatewayBillingError(error) || !process.env.AI_GATEWAY_API_KEY) {
-      const fallback = buildHoneyFallbackReply(message);
+      const fallback = buildHoneyFallbackReply(message, messages);
       await saveAssistantReply(supabase, user.id, fallback);
       return NextResponse.json({
         text: fallback,

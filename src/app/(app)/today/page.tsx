@@ -1,4 +1,5 @@
 import { DailyLogForm } from "@/components/daily-log-form";
+import { SoftHoneyNudge } from "@/components/soft-honey-nudge";
 import { todayLocal } from "@/lib/dates";
 import {
   getDailyLogForDate,
@@ -65,6 +66,7 @@ async function TodayContent({
           Thank you for checking in. Your words are safe with you.
         </p>
       ) : null}
+      <SoftHoneyNudge show={saved === "1"} />
       {!loggedToday ? (
         <p className="rounded-2xl border border-rose/30 bg-card px-4 py-3 text-sm leading-6 text-foreground">
           A gentle nudge: you have not logged today yet. Whenever you are ready is soon enough.

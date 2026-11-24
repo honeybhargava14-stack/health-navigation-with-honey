@@ -1,24 +1,39 @@
 "use client";
 
+import { PAIN_PREFILL_MESSAGE } from "@/lib/pain-guidance";
 import { ChatBubble, Button, TextArea } from "@health/ui";
-import { useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 type Message = { id: string; role: "user" | "assistant"; content: string };
 
-export function HoneyChat({ initialMessages }: { initialMessages: Message[] }) {
+export function HoneyChat({
+  initialMessages,
+  initialPrefill = "",
+}: {
+  initialMessages: Message[];
+  initialPrefill?: string;
+}) {
+  const router = useRouter();
+  const pathname = usePathname();
   const [messages, setMessages] = useState<Message[]>(
     initialMessages.filter((message) => message.content.trim().length > 0),
   );
-  const [input, setInput] = useState("");
+  const [input, setInput] = useState(initialPrefill.slice(0, 2000));
   const [pending, setPending] = useState(false);
   const [error, setError] = useState("");
 
+  useEffect(() => {
+    if (!initialPrefill) return;
+    router.replace(pathname, { scroll: false });
+  }, [initialPrefill, router, pathname]);
+
   async function send() {
-    const text = input.trim();
-    if (!text || pending) return;
+    const message = input.trim();
+    if (!message || pending) return;
     setInput("");
     setError("");
-    const userMessage: Message = { id: `local-${Date.now()}`, role: "user", content: text };
+    const userMessage: Message = { id: `local-${Date.now()}`, role: "user", content: message };
     setMessages((current) => [...current, userMessage]);
     setPending(true);
 
@@ -26,7 +41,7 @@ export function HoneyChat({ initialMessages }: { initialMessages: Message[] }) {
       const response = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: text }),
+        body: JSON.stringify({ message }),
       });
 
       const data = (await response.json().catch(() => ({}))) as {
@@ -71,9 +86,7 @@ export function HoneyChat({ initialMessages }: { initialMessages: Message[] }) {
                 {message.content}
               </ChatBubble>
             ))}
-            {pending ? (
-              <ChatBubble role="assistant">Honey is listening…</ChatBubble>
-            ) : null}
+            {pending ? <ChatBubble role="assistant">Honey is listening…</ChatBubble> : null}
           </>
         )}
       </div>
@@ -83,7 +96,7 @@ export function HoneyChat({ initialMessages }: { initialMessages: Message[] }) {
         name="message"
         value={input}
         onChange={(event) => setInput(event.target.value)}
-        placeholder="I have been tired and my head hurts…"
+        placeholder={PAIN_PREFILL_MESSAGE}
         rows={3}
       />
       <Button type="button" onClick={send} disabled={pending || !input.trim()}>

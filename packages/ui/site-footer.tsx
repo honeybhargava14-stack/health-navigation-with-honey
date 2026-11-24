@@ -10,9 +10,14 @@ type SiteFooterProps = {
   brand: string;
   wordmark?: string;
   links: readonly FooterLink[];
+  /** Defaults to © {year} {wordmark or brand}. */
+  copyright?: string;
 };
 
-export function SiteFooter({ brand, wordmark, links }: SiteFooterProps) {
+export function SiteFooter({ brand, wordmark, links, copyright }: SiteFooterProps) {
+  const copyrightText =
+    copyright ?? `© ${new Date().getFullYear()} ${wordmark || brand}. All rights reserved.`;
+
   return (
     <footer className="mt-auto border-t border-border bg-accent/60">
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-5 py-12">
@@ -37,6 +42,7 @@ export function SiteFooter({ brand, wordmark, links }: SiteFooterProps) {
           </nav>
         </div>
         <DisclaimerNotice />
+        <p className="text-sm text-muted">{copyrightText}</p>
       </div>
     </footer>
   );
