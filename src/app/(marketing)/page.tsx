@@ -159,9 +159,9 @@ export default function HomePage() {
           }
         >
           <p>
-            The web app is a practical companion, not a clinic. You can log one recurring symptom,
-            notice coincidences in your own notes, and prepare a 14-day summary to take to a
-            clinician. It does not diagnose, treat, or replace professional care.
+            The web app is a practical companion, not a clinic. You can track several symptoms,
+            keep doctor visits and reports in one place, and look at gentle day-to-year summaries
+            with Honey. It does not diagnose, treat, or replace professional care.
           </p>
         </CtaSection>
       </EditorialSection>

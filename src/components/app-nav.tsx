@@ -4,9 +4,10 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const links = [
-  { href: "/check-in", label: "Check-in" },
-  { href: "/dashboard", label: "Dashboard" },
-  { href: "/report", label: "Report" },
+  { href: "/today", label: "Today" },
+  { href: "/progress", label: "Progress" },
+  { href: "/care", label: "Care" },
+  { href: "/honey", label: "Honey" },
   { href: "/settings", label: "Settings" },
 ];
 
@@ -15,9 +16,9 @@ export function AppNav() {
 
   return (
     <nav className="no-print fixed inset-x-0 bottom-0 z-20 border-t border-border bg-card/95 px-2 py-2 backdrop-blur">
-      <ul className="mx-auto grid max-w-lg grid-cols-4 gap-1">
+      <ul className="mx-auto grid max-w-lg grid-cols-5 gap-1">
         {links.map((link) => {
-          const active = pathname === link.href;
+          const active = pathname === link.href || pathname.startsWith(`${link.href}/`);
           return (
             <li key={link.href}>
               <Link

@@ -2,10 +2,6 @@ import { createClient } from "@/lib/supabase/server";
 import { connection } from "next/server";
 import { NextResponse } from "next/server";
 
-type TreatmentLink = {
-  treatments: { name: string } | { name: string }[] | null;
-};
-
 export async function GET() {
   await connection();
   const supabase = await createClient();
@@ -18,15 +14,21 @@ export async function GET() {
   }
 
   const { data, error } = await supabase
-    .from("check_ins")
+    .from("daily_logs")
     .select(
       `
       logged_on,
-      severity,
       sleep_hours,
       stress,
-      lifestyle_note,
-      check_in_treatments (
+      mood,
+      energy,
+      overall_note,
+      symptom_entries (
+        severity,
+        note,
+        symptoms ( label )
+      ),
+      daily_log_treatments (
         treatments ( name )
       )
     `,
@@ -39,37 +41,51 @@ export async function GET() {
   }
 
   const lines = [
-    "date,severity,sleep_hours,stress,lifestyle_note,treatments",
-    ...(data ?? []).map((row) =>
-      [
+    "date,mood,energy,sleep_hours,stress,overall_note,symptoms,treatments",
+    ...(data ?? []).map((row) => {
+      const symptoms =
+        (
+          row.symptom_entries as
+            | { severity: number; note: string; symptoms: { label: string } | { label: string }[] | null }[]
+            | null
+        )?.map((entry) => {
+          const label = Array.isArray(entry.symptoms)
+            ? entry.symptoms[0]?.label
+            : entry.symptoms?.label;
+          return `${label ?? "symptom"}:${entry.severity}`;
+        }) ?? [];
+      const treatments =
+        (
+          row.daily_log_treatments as
+            | { treatments: { name: string } | { name: string }[] | null }[]
+            | null
+        )?.map((link) => {
+          const treatment = link.treatments;
+          return Array.isArray(treatment) ? treatment[0]?.name : treatment?.name;
+        }).filter(Boolean) ?? [];
+
+      return [
         row.logged_on,
-        String(row.severity),
+        String(row.mood),
+        String(row.energy),
         String(row.sleep_hours),
         String(row.stress),
-        csvEscape(row.lifestyle_note ?? ""),
-        csvEscape(names(row.check_in_treatments).join("; ")),
-      ].join(","),
-    ),
+        csvEscape(row.overall_note ?? ""),
+        csvEscape(symptoms.join("; ")),
+        csvEscape(treatments.join("; ")),
+      ].join(",");
+    }),
   ];
 
   return new NextResponse(lines.join("\n"), {
     headers: {
       "Content-Type": "text/csv; charset=utf-8",
-      "Content-Disposition": 'attachment; filename="health-intelligence-log.csv"',
+      "Content-Disposition": 'attachment; filename="honey-health-log.csv"',
     },
   });
 }
 
-function names(links: TreatmentLink[] | null) {
-  return (links ?? []).flatMap((link) => {
-    if (!link.treatments) return [];
-    return Array.isArray(link.treatments)
-      ? link.treatments.map((item) => item.name)
-      : [link.treatments.name];
-  });
-}
-
 function csvEscape(value: string) {
-  if (/[",\n]/.test(value)) return `"${value.replaceAll('"', '""')}"`;
+  if (/[",\n]/.test(value)) return `"${value.replace(/"/g, '""')}"`;
   return value;
 }

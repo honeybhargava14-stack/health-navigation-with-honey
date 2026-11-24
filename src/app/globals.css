@@ -2,18 +2,18 @@
 @source "../../packages/ui";
 
 :root {
-  --background: #f6efe4;
-  --foreground: #3d2b22;
-  --card: #fffaf3;
-  --primary: #5c6b56;
-  --primary-foreground: #f7f3ea;
-  --muted: #6e5b4e;
-  --border: #e4d5c4;
-  --accent: #ece4d4;
+  --background: #f7f0e8;
+  --foreground: #3a2c26;
+  --card: #fffaf4;
+  --primary: #5f735f;
+  --primary-foreground: #f8f4ec;
+  --muted: #6f5d52;
+  --border: #e6d8c8;
+  --accent: #f0e6d8;
   --danger: #8d3b3b;
-  --rose: #c4898a;
-  --terracotta: #c57a5a;
-  --sage-soft: #e4ebe0;
+  --rose: #c99495;
+  --terracotta: #c4886a;
+  --sage-soft: #e7eee4;
 }
 
 @theme inline {
@@ -34,7 +34,10 @@
 }
 
 body {
-  background: var(--background);
+  background:
+    radial-gradient(ellipse 80% 50% at 20% -10%, rgba(201, 148, 149, 0.18), transparent),
+    radial-gradient(ellipse 70% 40% at 100% 0%, rgba(95, 115, 95, 0.12), transparent),
+    var(--background);
   color: var(--foreground);
   font-family: var(--font-sans), system-ui, sans-serif;
 }

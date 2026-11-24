@@ -1,7 +1,21 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
-const APP_PREFIXES = ["/dashboard", "/check-in", "/report", "/settings", "/api/export"];
+const APP_PREFIXES = [
+  "/today",
+  "/progress",
+  "/care",
+  "/honey",
+  "/settings",
+  "/dashboard",
+  "/check-in",
+  "/report",
+  "/api/export",
+  "/api/ai",
+  "/api/chat",
+  "/api/reminders",
+  "/api/push",
+];
 
 export async function updateSession(request: NextRequest) {
   const path = request.nextUrl.pathname;
@@ -60,7 +74,12 @@ export async function updateSession(request: NextRequest) {
   }
 
   if (onboarded && (isOnboarding || isAuthPage)) {
-    return redirectTo(request, "/dashboard", supabaseResponse);
+    return redirectTo(request, "/today", supabaseResponse);
+  }
+
+  // Soft redirects from retired routes
+  if (path === "/dashboard" || path === "/check-in" || path === "/report") {
+    return redirectTo(request, path === "/report" ? "/progress" : "/today", supabaseResponse);
   }
 
   return supabaseResponse;

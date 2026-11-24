@@ -1,7 +1,8 @@
 import { DeleteAccountForm, SignOutButton } from "@/components/account-actions";
-import { InvestigationForm } from "@/components/investigation-form";
+import { PushSettings } from "@/components/push-settings";
+import { SymptomManager } from "@/components/symptom-manager";
 import { TreatmentManager } from "@/components/treatment-manager";
-import { getInvestigation, getTreatments, requireUser } from "@/lib/data";
+import { getProfile, getSymptoms, getTreatments, requireUser } from "@/lib/data";
 import { buttonClass, Card } from "@health/ui";
 import type { Metadata } from "next";
 import Link from "next/link";
@@ -27,29 +28,38 @@ async function SettingsContent({
   searchParams: Promise<{ saved?: string }>;
 }) {
   const [{ saved }, { supabase, user }] = await Promise.all([searchParams, requireUser()]);
-  const [investigation, treatments] = await Promise.all([
-    getInvestigation(supabase, user.id),
+  const [profile, symptoms, treatments] = await Promise.all([
+    getProfile(supabase, user.id),
+    getSymptoms(supabase, user.id, false),
     getTreatments(supabase, user.id),
   ]);
 
   return (
     <div className="flex flex-col gap-5">
       <h1 className="font-serif text-3xl font-semibold">Settings</h1>
-      {saved === "investigation" ? (
+      <p className="text-sm leading-6 text-muted">
+        {profile?.display_name ? `Signed in as ${profile.display_name}.` : "Your calm control room."}
+      </p>
+      {saved === "symptom" ? (
         <p className="rounded-2xl bg-accent px-4 py-3 text-sm" role="status">
-          Investigation saved.
+          Symptom saved.
         </p>
       ) : null}
-      <Card title="Investigation">
-        <InvestigationForm mode="settings" investigation={investigation} />
+      <Card title="Symptoms you track">
+        <SymptomManager symptoms={symptoms.filter((symptom) => symptom.active)} />
       </Card>
       <Card title="Treatments">
         <TreatmentManager treatments={treatments} />
       </Card>
+      <Card title="Gentle reminders">
+        <p className="mb-4 text-sm leading-6 text-muted">
+          Honey already nudges you in the app. Browser reminders are optional.
+        </p>
+        <PushSettings enabled={profile?.push_enabled ?? false} />
+      </Card>
       <Card title="Export">
         <p className="mb-4 text-sm leading-6 text-muted">
-          Download every check-in as a CSV file. The 14-day report can be saved as a PDF from the
-          report page.
+          Download your daily logs as a CSV file. Progress can be printed from the Progress page.
         </p>
         <Link href="/api/export" className={buttonClass("secondary")}>
           Download CSV

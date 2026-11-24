@@ -1,12 +1,12 @@
 import { SITE_NAME } from "@/lib/site";
 import { SignOutButton } from "@/components/account-actions";
-import { InvestigationForm } from "@/components/investigation-form";
-import { getInvestigation, getProfile, requireUser } from "@/lib/data";
+import { OnboardingForm } from "@/components/onboarding-form";
+import { getProfile, requireUser } from "@/lib/data";
 import { BackToWebsite, Card, SafetyNotice } from "@health/ui";
 import type { Metadata } from "next";
 import { Suspense } from "react";
 
-export const metadata: Metadata = { title: "Onboarding" };
+export const metadata: Metadata = { title: "Welcome" };
 
 export default function OnboardingPage() {
   return (
@@ -14,7 +14,7 @@ export default function OnboardingPage() {
       <div className="flex items-start justify-between gap-4">
         <div>
           <p className="text-sm font-medium text-primary">{SITE_NAME}</p>
-          <h1 className="font-serif mt-2 text-3xl font-semibold">Your investigation</h1>
+          <h1 className="font-serif mt-2 text-3xl font-semibold">A soft place to begin</h1>
         </div>
         <BackToWebsite />
       </div>
@@ -28,18 +28,11 @@ export default function OnboardingPage() {
 
 async function OnboardingContent() {
   const { supabase, user } = await requireUser();
-  const [profile, investigation] = await Promise.all([
-    getProfile(supabase, user.id),
-    getInvestigation(supabase, user.id),
-  ]);
+  const profile = await getProfile(supabase, user.id);
 
   return (
     <Card>
-      <InvestigationForm
-        mode="onboarding"
-        displayName={profile?.display_name ?? ""}
-        investigation={investigation}
-      />
+      <OnboardingForm displayName={profile?.display_name ?? ""} />
       <div className="mt-4">
         <SignOutButton />
       </div>

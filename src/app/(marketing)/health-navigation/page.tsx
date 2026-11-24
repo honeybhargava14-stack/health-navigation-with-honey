@@ -12,21 +12,21 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Health Navigation",
   description:
-    "A personal tool for logging one recurring symptom, noticing patterns in your notes, and preparing a 14-day summary for a clinician. It does not diagnose or treat.",
+    "A warm multi-symptom tracker with daily check-ins, progress charts, doctor appointments, and Honey chat. It does not diagnose or treat.",
 };
 
 const capabilities = [
   {
-    title: "Log one recurring symptom",
-    body: "Choose a health question and keep a short daily record of severity, sleep, stress, and what you tried.",
+    title: "Track several symptoms gently",
+    body: "Speak or type how you feel. Log mood, energy, sleep, stress, and each symptom you care about.",
   },
   {
-    title: "Notice coincidences in your notes",
-    body: "After enough days in a 14-day window, the tool can compare groups in what you recorded. Those comparisons are correlations, not proof of cause.",
+    title: "See day, week, month, and year",
+    body: "Soft charts summarize what you shared so patterns are easier to notice without judgment.",
   },
   {
-    title: "Prepare a visit-ready summary",
-    body: "Create a 14-day report with observations, limits, and questions you might take to a clinician. You can also export your log as CSV.",
+    title: "Prepare for care visits",
+    body: "Keep appointments, reports, and suggested questions in one place. Export your log as CSV anytime.",
   },
 ];
 

@@ -22,7 +22,7 @@ export function DeleteAccountForm() {
     <form action={action} className="flex flex-col gap-4">
       <FormError message={state.error} />
       <p className="text-sm leading-6 text-muted">
-        This permanently deletes your investigation, check-ins, treatments, and login. It cannot
+        This permanently deletes your symptoms, daily logs, appointments, treatments, and login. It cannot
         be undone.
       </p>
       <TextField label='Type DELETE to confirm' name="confirm" autoComplete="off" />

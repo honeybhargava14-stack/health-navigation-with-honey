@@ -32,9 +32,10 @@ export default function PrivacyPage() {
             <h2 className="font-serif text-2xl font-semibold text-foreground">What I collect</h2>
             <p className="mt-3">
               If you create an account, the tool stores the information you choose to enter: an
-              email address, an optional display name, the health question you are following, daily
-              check-ins (such as symptom severity, sleep, stress, notes, and treatments you log),
-              and whether you finished onboarding.
+              email address, an optional display name, onboarding answers, symptoms you track,
+              daily logs (mood, energy, sleep, stress, notes, treatments), appointments and
+              reports you add, optional chat messages with Honey, and whether you finished
+              onboarding.
             </p>
             <p className="mt-3">
               The public pages do not require an account. The contact form on this website is not
@@ -52,9 +53,10 @@ export default function PrivacyPage() {
           <section>
             <h2 className="font-serif text-2xl font-semibold text-foreground">How it is used</h2>
             <p className="mt-3">
-              Your log is used to show you a dashboard, compare groups in the days you recorded,
-              and prepare a 14-day summary. Those comparisons are correlations in your notes. They
-              are not proof of cause, and they are not a diagnosis.
+              Your log is used to show progress charts, support visit prep, and power Honey chat
+              helpers. Patterns in your notes are correlations. They are not proof of cause, and
+              they are not a diagnosis. AI features use Vercel AI Gateway and are framed as
+              non-diagnostic support only.
             </p>
             <p className="mt-3">
               I do not sell this information. This site does not currently use the log to send
@@ -64,9 +66,9 @@ export default function PrivacyPage() {
           <section>
             <h2 className="font-serif text-2xl font-semibold text-foreground">Export and deletion</h2>
             <p className="mt-3">
-              You can download your check-ins as a CSV file from Settings or from the report page.
-              You can also delete your account, which permanently removes your investigation,
-              check-ins, treatments, and login. That action cannot be undone.
+              You can download your daily logs as a CSV file from Settings. You can also delete
+              your account, which permanently removes your symptoms, logs, appointments, chat,
+              treatments, and login. That action cannot be undone.
             </p>
           </section>
           <section>
