@@ -28,6 +28,11 @@ async function HoneyContent() {
       </div>
       <SafetyNotice />
       <DisclaimerNotice />
+      <aside className="rounded-2xl border border-border bg-card px-4 py-3 text-sm leading-6 text-muted">
+        If full AI replies are temporarily unavailable, Honey still answers with a gentle guided
+        fallback so you are never left with an empty chat. Unlock Vercel AI Gateway billing to
+        restore the full AI companion.
+      </aside>
       <Card>
         <HoneyChat
           initialMessages={messages

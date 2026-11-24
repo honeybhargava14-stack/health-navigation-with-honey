@@ -1,12 +1,25 @@
 import { HONEY_MODEL, HONEY_SYSTEM } from "@/lib/ai";
 import { todayLocal } from "@/lib/dates";
 import { formatHoneyError } from "@/lib/honey-errors";
+import { buildHoneyFallbackReply, isGatewayBillingError } from "@/lib/honey-fallback";
 import { suggestSpecialtiesForCategory } from "@/lib/specialty-map";
 import { createClient } from "@/lib/supabase/server";
 import { generateText, isStepCount, tool } from "ai";
 import { connection } from "next/server";
 import { NextResponse } from "next/server";
 import { z } from "zod";
+
+async function saveAssistantReply(
+  supabase: Awaited<ReturnType<typeof createClient>>,
+  userId: string,
+  reply: string,
+) {
+  await supabase.from("chat_messages").insert({
+    user_id: userId,
+    role: "assistant",
+    content: reply,
+  });
+}
 
 export async function POST(request: Request) {
   await connection();
@@ -15,13 +28,6 @@ export async function POST(request: Request) {
     data: { user },
   } = await supabase.auth.getUser();
   if (!user) return NextResponse.json({ error: "Sign in required." }, { status: 401 });
-
-  if (!process.env.AI_GATEWAY_API_KEY) {
-    return NextResponse.json(
-      { error: "Honey's AI helper is not configured yet." },
-      { status: 503 },
-    );
-  }
 
   const body = (await request.json()) as { message?: string };
   const message = String(body.message || "").trim().slice(0, 2000);
@@ -32,6 +38,12 @@ export async function POST(request: Request) {
     role: "user",
     content: message,
   });
+
+  if (!process.env.AI_GATEWAY_API_KEY) {
+    const fallback = buildHoneyFallbackReply(message);
+    await saveAssistantReply(supabase, user.id, fallback);
+    return NextResponse.json({ text: fallback, mode: "fallback" });
+  }
 
   const { data: history } = await supabase
     .from("chat_messages")
@@ -161,15 +173,21 @@ Confirm gently what you saved. Today is ${todayLocal()}.`,
       );
     }
 
-    await supabase.from("chat_messages").insert({
-      user_id: user.id,
-      role: "assistant",
-      content: reply,
-    });
-
+    await saveAssistantReply(supabase, user.id, reply);
     return NextResponse.json({ text: reply });
   } catch (error) {
     console.error("Honey chat failed:", error);
+
+    // Keep Honey responsive when AI Gateway billing is locked.
+    if (isGatewayBillingError(error) || !process.env.AI_GATEWAY_API_KEY) {
+      const fallback = buildHoneyFallbackReply(message);
+      await saveAssistantReply(supabase, user.id, fallback);
+      return NextResponse.json({
+        text: fallback,
+        mode: "fallback",
+      });
+    }
+
     return NextResponse.json({ error: formatHoneyError(error) }, { status: 503 });
   }
 }
