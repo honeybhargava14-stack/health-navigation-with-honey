@@ -6,10 +6,12 @@ type HeroProps = {
   title: string;
   description: ReactNode;
   actions: ReactNode;
+  /** Optional content below actions (e.g. name and designation). */
+  footer?: ReactNode;
   image: { src: string; alt: string };
 };
 
-export function Hero({ eyebrow, title, description, actions, image }: HeroProps) {
+export function Hero({ eyebrow, title, description, actions, footer, image }: HeroProps) {
   return (
     <section className="relative overflow-hidden">
       <div
@@ -30,6 +32,7 @@ export function Hero({ eyebrow, title, description, actions, image }: HeroProps)
           </h1>
           <div className="max-w-xl text-lg leading-8 text-muted">{description}</div>
           <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">{actions}</div>
+          {footer ? <div className="mt-1">{footer}</div> : null}
         </div>
         <ImageFrame
           src={image.src}

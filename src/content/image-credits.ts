@@ -23,4 +23,28 @@ export const IMAGE_CREDITS = [
     file: "/images/linen.jpg",
     credit: "Bedside lamp and linen, Unsplash, photo-1522771739844-6a9f6d5f14af",
   },
+  {
+    file: "/images/honey-portrait.jpg",
+    credit: "Personal portrait of Honey Bhargava, provided by the author",
+  },
+  {
+    file: "/images/story-journaling.jpg",
+    credit: "Editorial lifestyle image for My Story journaling section",
+  },
+  {
+    file: "/images/understand-desk.jpg",
+    credit: "Editorial still life for health information organisation",
+  },
+  {
+    file: "/images/explore-workspace.jpg",
+    credit: "Editorial workspace image for exploring health information",
+  },
+  {
+    file: "/images/navigate-conversation.jpg",
+    credit: "Editorial conversation image for healthcare navigation",
+  },
+  {
+    file: "/images/closing-light.jpg",
+    credit: "Editorial atmosphere image for closing About Me section",
+  },
 ] as const;

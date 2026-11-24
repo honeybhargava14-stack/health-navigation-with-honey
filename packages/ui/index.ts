@@ -23,6 +23,7 @@ export { SeverityControl } from "./severity-control";
 export { SiteFooter } from "./site-footer";
 export { SiteHeader } from "./site-header";
 export { Sparkline } from "./sparkline";
+export { StatusBadge } from "./status-badge";
 export { StreakBadge } from "./streak-badge";
 export { TextArea } from "./text-area";
 export { TextField } from "./text-field";

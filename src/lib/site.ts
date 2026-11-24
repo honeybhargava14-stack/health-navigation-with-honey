@@ -1,6 +1,6 @@
 export const SITE_NAME = "Health Navigation with Honey";
 export const SITE_WORDMARK = "healthnavigationwithhoney";
-export const AUTHOR_NAME = "Honey Bhargavs";
+export const AUTHOR_NAME = "Honey Bhargava";
 
 export const SITE_DESCRIPTION =
   "A personal space to help people feel heard, organize their health experiences, and prepare for healthcare conversations. This is not for emergencies and does not diagnose or treat.";
@@ -10,16 +10,17 @@ export const DISCLAIMER =
 
 export const NAV_LINKS = [
   { href: "/", label: "Home" },
-  { href: "/about", label: "About Me" },
-  { href: "/resources", label: "Resources" },
+  { href: "/my-story", label: "My Story" },
   { href: "/health-navigation", label: "Health Navigation" },
+  { href: "/resources", label: "Resources" },
+  { href: "/contact", label: "Contact" },
 ] as const;
 
 export const FOOTER_LINKS = [
   { href: "/", label: "Home" },
-  { href: "/about", label: "About Me" },
-  { href: "/resources", label: "Resources" },
+  { href: "/my-story", label: "My Story" },
   { href: "/health-navigation", label: "Health Navigation" },
+  { href: "/resources", label: "Resources" },
   { href: "/privacy", label: "Privacy Policy" },
   { href: "/contact", label: "Contact" },
 ] as const;

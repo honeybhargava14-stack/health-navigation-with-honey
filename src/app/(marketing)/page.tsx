@@ -51,7 +51,7 @@ export default function HomePage() {
             <Link href="/health-navigation" className={buttonClass("primary", "", false)}>
               Explore Health Navigation
             </Link>
-            <Link href="/about" className={buttonClass("secondary", "", false)}>
+            <Link href="/my-story" className={buttonClass("secondary", "", false)}>
               Read My Story
             </Link>
           </>
@@ -90,8 +90,7 @@ export default function HomePage() {
           <p>
             I have been living with chronic pain and with the uncertainty that comes from trying to
             understand symptoms, find language for them, and be taken seriously in short
-            appointments. The details of that story are still mine to fill in here, in my own
-            words, when I am ready. [Personal medical history placeholder]
+            appointments. That lived experience is why I care about health navigation.
           </p>
           <p>
             What I can say now is this: the practical parts and the emotional parts arrived
@@ -101,8 +100,8 @@ export default function HomePage() {
           <p>
             That is why this site exists. It is a place for my story, for resources I wish I had
             earlier, and for a small tool that helps organize a personal health log.{" "}
-            <Link href="/about" className="font-medium text-primary hover:underline">
-              Read more about me
+            <Link href="/my-story" className="font-medium text-primary hover:underline">
+              Read my full story
             </Link>
             .
           </p>
