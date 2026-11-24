@@ -176,7 +176,9 @@ export default function MyStoryPage() {
           // Personal portrait of Honey Bhargava. Replace this file to update the hero photo.
           src: "/images/honey-portrait.jpg",
           alt: `Portrait of ${AUTHOR_NAME}, Health Navigator and Founder`,
-          imageClassName: "object-top",
+          fit: "contain",
+          frameClassName:
+            "aspect-[9/16] min-h-[32rem] w-full md:min-h-[40rem] lg:min-h-[44rem]",
         }}
       />
 
@@ -308,8 +310,8 @@ export default function MyStoryPage() {
             <ImageFrame
               src="/images/honey-portrait.jpg"
               alt={`Portrait of ${AUTHOR_NAME}`}
-              className="aspect-[3/4]"
-              imageClassName="object-top"
+              className="aspect-[9/16] min-h-[28rem] w-full md:min-h-[34rem]"
+              fit="contain"
               priority={false}
             />
             <figcaption className="mt-3 text-sm text-muted">

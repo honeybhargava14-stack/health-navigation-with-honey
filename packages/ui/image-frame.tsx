@@ -9,6 +9,8 @@ type ImageFrameProps = {
   className?: string;
   /** Extra classes for the img (e.g. object-top for portraits). */
   imageClassName?: string;
+  /** cover fills and may crop; contain shows the full image. */
+  fit?: "cover" | "contain";
   priority?: boolean;
   sizes?: string;
 };
@@ -18,10 +20,12 @@ export function ImageFrame({
   alt,
   className = "",
   imageClassName = "",
+  fit = "cover",
   priority = false,
   sizes = "(min-width: 1024px) 42vw, 100vw",
 }: ImageFrameProps) {
   const [failed, setFailed] = useState(false);
+  const fitClass = fit === "contain" ? "object-contain" : "object-cover";
 
   return (
     <div className={`relative overflow-hidden rounded-3xl bg-accent shadow-sm ${className}`}>
@@ -34,7 +38,7 @@ export function ImageFrame({
           fill
           priority={priority}
           sizes={sizes}
-          className={`object-cover ${imageClassName}`}
+          className={`${fitClass} ${imageClassName}`}
           onError={() => setFailed(true)}
         />
       )}
