@@ -6,7 +6,9 @@ import { useState } from "react";
 type Message = { id: string; role: "user" | "assistant"; content: string };
 
 export function HoneyChat({ initialMessages }: { initialMessages: Message[] }) {
-  const [messages, setMessages] = useState<Message[]>(initialMessages);
+  const [messages, setMessages] = useState<Message[]>(
+    initialMessages.filter((message) => message.content.trim().length > 0),
+  );
   const [input, setInput] = useState("");
   const [pending, setPending] = useState(false);
   const [error, setError] = useState("");
@@ -27,30 +29,26 @@ export function HoneyChat({ initialMessages }: { initialMessages: Message[] }) {
         body: JSON.stringify({ message: text }),
       });
 
-      if (!response.ok || !response.body) {
-        const data = (await response.json().catch(() => ({}))) as { error?: string };
+      const data = (await response.json().catch(() => ({}))) as {
+        text?: string;
+        error?: string;
+      };
+
+      if (!response.ok) {
         setError(data.error ?? "Honey could not reply just now.");
-        setPending(false);
         return;
       }
 
-      const reader = response.body.getReader();
-      const decoder = new TextDecoder();
-      let assistant = "";
-      const assistantId = `assistant-${Date.now()}`;
-      setMessages((current) => [...current, { id: assistantId, role: "assistant", content: "" }]);
-
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-        assistant += decoder.decode(value, { stream: true });
-        const snapshot = assistant;
-        setMessages((current) =>
-          current.map((message) =>
-            message.id === assistantId ? { ...message, content: snapshot } : message,
-          ),
-        );
+      const reply = String(data.text || "").trim();
+      if (!reply) {
+        setError(data.error ?? "Honey paused without a reply. Please try again.");
+        return;
       }
+
+      setMessages((current) => [
+        ...current,
+        { id: `assistant-${Date.now()}`, role: "assistant", content: reply },
+      ]);
     } catch {
       setError("Honey could not reply just now.");
     } finally {
@@ -61,17 +59,22 @@ export function HoneyChat({ initialMessages }: { initialMessages: Message[] }) {
   return (
     <div className="flex flex-col gap-4">
       <div className="flex max-h-[50vh] flex-col gap-3 overflow-y-auto rounded-3xl border border-border bg-card p-4">
-        {messages.length === 0 ? (
+        {messages.length === 0 && !pending ? (
           <p className="text-sm leading-6 text-muted">
             Hi, I am Honey. Tell me how you are feeling, what you want to log, or what visit you are
             preparing for. I can help fill fields gently. I do not diagnose.
           </p>
         ) : (
-          messages.map((message) => (
-            <ChatBubble key={message.id} role={message.role}>
-              {message.content || (pending ? "…" : "")}
-            </ChatBubble>
-          ))
+          <>
+            {messages.map((message) => (
+              <ChatBubble key={message.id} role={message.role}>
+                {message.content}
+              </ChatBubble>
+            ))}
+            {pending ? (
+              <ChatBubble role="assistant">Honey is listening…</ChatBubble>
+            ) : null}
+          </>
         )}
       </div>
       {error ? <p className="text-sm text-danger">{error}</p> : null}
