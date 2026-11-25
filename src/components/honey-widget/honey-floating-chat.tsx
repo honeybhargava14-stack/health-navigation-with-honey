@@ -116,7 +116,7 @@ export function HoneyFloatingChat() {
           {error ? <p className="text-sm text-danger">{error}</p> : null}
           <TextArea
             label="Talk with Honey"
-            name="honey-v2-message"
+            name="honey-widget-message"
             value={input}
             onChange={(event) => setInput(event.target.value)}
             placeholder="I have been sore…"

@@ -1,6 +1,6 @@
 "use client";
 
-import { useReportPainText } from "@/components/honey-v2/pain-intent-context";
+import { useReportPainText } from "@/components/honey-widget/pain-intent-context";
 import { saveDailyLog } from "@/lib/actions";
 import { initialActionState } from "@/lib/action-state";
 import type { Symptom, TreatmentOption } from "@/lib/data";

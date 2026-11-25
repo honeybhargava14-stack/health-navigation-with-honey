@@ -11,7 +11,7 @@ import {
   type ReactNode,
 } from "react";
 
-const SNOOZE_KEY = "honey-v2-pain-snooze";
+const SNOOZE_KEY = "honey-pain-invite-snooze";
 
 type PainIntentContextValue = {
   inviteOpen: boolean;
@@ -94,7 +94,7 @@ export function usePainIntent() {
   return useContext(PainIntentContext);
 }
 
-/** Safe for forms that may render outside the provider when the flag is off. */
+/** Safe no-op when the provider is not mounted. */
 export function useReportPainText() {
   const ctx = useContext(PainIntentContext);
   return ctx?.reportText ?? (() => {});

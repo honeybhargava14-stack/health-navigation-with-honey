@@ -1,6 +1,6 @@
 import { SITE_BRAND, SITE_WORDMARK } from "@/lib/site";
 import { AppNav } from "@/components/app-nav";
-import { HoneyAssistantV2 } from "@/components/honey-v2/honey-assistant-v2";
+import { HoneyAssistant } from "@/components/honey-widget/honey-assistant";
 import { BackToWebsite } from "@health/ui";
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
@@ -13,10 +13,10 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
         </div>
         <BackToWebsite />
       </header>
-      <HoneyAssistantV2>
+      <HoneyAssistant>
         <div className="flex-1 px-5 py-5">{children}</div>
         <AppNav />
-      </HoneyAssistantV2>
+      </HoneyAssistant>
     </div>
   );
 }
