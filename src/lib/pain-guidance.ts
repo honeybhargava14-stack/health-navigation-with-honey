@@ -1,3 +1,5 @@
+import { detectPainIntent } from "@/lib/pain-intent";
+
 export const PAIN_ASSESSMENT_URL = "https://www.paindoctorbangalore.com/pain-assessment";
 
 /** Extra system guidance for Honey when navigating pain conversations. */
@@ -33,10 +35,7 @@ export function buildPainConversationReply(
 ): string | null {
   const text = message.trim();
   const prior = lastAssistant(history);
-  const painNow =
-    /\b(pain|pains|painful|aching|aches|ache|sore|soreness|hurts|hurting|hurt|migraine|headache)\b/i.test(
-      text,
-    );
+  const painNow = detectPainIntent(text);
 
   if (prior.includes("where do you feel it") || prior.includes("where is the pain")) {
     return [

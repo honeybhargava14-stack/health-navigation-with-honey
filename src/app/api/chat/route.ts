@@ -1,4 +1,5 @@
 import { HONEY_MODEL, HONEY_SYSTEM } from "@/lib/ai";
+import { getChatMessages } from "@/lib/data";
 import { todayLocal } from "@/lib/dates";
 import { formatHoneyError } from "@/lib/honey-errors";
 import { buildHoneyFallbackReply, isGatewayBillingError } from "@/lib/honey-fallback";
@@ -8,6 +9,29 @@ import { generateText, isStepCount, tool } from "ai";
 import { connection } from "next/server";
 import { NextResponse } from "next/server";
 import { z } from "zod";
+
+export async function GET() {
+  await connection();
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) return NextResponse.json({ error: "Sign in required." }, { status: 401 });
+
+  try {
+    const messages = await getChatMessages(supabase, user.id);
+    return NextResponse.json({
+      messages: messages.map((message) => ({
+        id: message.id,
+        role: message.role,
+        content: message.content,
+      })),
+    });
+  } catch (error) {
+    console.error("Honey chat history failed:", error);
+    return NextResponse.json({ error: "Could not load chat history." }, { status: 503 });
+  }
+}
 
 async function saveAssistantReply(
   supabase: Awaited<ReturnType<typeof createClient>>,

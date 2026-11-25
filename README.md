@@ -29,7 +29,10 @@ AI_GATEWAY_API_KEY=your-gateway-key
 NEXT_PUBLIC_VAPID_PUBLIC_KEY=your-vapid-public-key
 VAPID_PRIVATE_KEY=your-vapid-private-key
 CRON_SECRET=a-long-random-string
+NEXT_PUBLIC_HONEY_WIDGET_V2=1
 ```
+
+`NEXT_PUBLIC_HONEY_WIDGET_V2=1` turns on Honey Assistant v2: a bottom-right invite when Today check-in text mentions pain, then an opt-in floating chat dock. Leave it unset to keep the app as Honey v1 only (the Honey tab and `/honey` page stay either way).
 
 The service role key is used on the server for account deletion and reminder delivery. Never prefix it with `NEXT_PUBLIC_`.
 
@@ -77,7 +80,8 @@ Create an account, complete warm onboarding (goal, diagnosis stage if any, sympt
 - **Today** – How are you, streak, multi-symptom check-in, speech-to-text
 - **Progress** – Day / week / month / year charts and clinician-friendly summary
 - **Care** – Appointments, month calendar, PDF/image/text/link reports, visit prep
-- **Honey** – Chat that can fill check-ins, symptoms, and appointments
+- **Honey** – Full-page chat (v1) that can fill check-ins, symptoms, and appointments
+- **Honey widget (v2)** – Optional floating invite + dock when Today notes mention pain (`NEXT_PUBLIC_HONEY_WIDGET_V2=1`)
 - **Settings** – Symptoms, treatments, push opt-in, export, delete account
 
 ## Stop local stack

@@ -1,5 +1,6 @@
 "use client";
 
+import { useReportPainText } from "@/components/honey-v2/pain-intent-context";
 import { saveDailyLog } from "@/lib/actions";
 import { initialActionState } from "@/lib/action-state";
 import type { Symptom, TreatmentOption } from "@/lib/data";
@@ -58,6 +59,11 @@ export function DailyLogForm({
   const [supported, setSupported] = useState(false);
   const [suggestion, setSuggestion] = useState<string | null>(null);
   const recognitionRef = useRef<SpeechRecognitionLike | null>(null);
+  const reportPainText = useReportPainText();
+
+  useEffect(() => {
+    reportPainText(`${note}\n${speech}`);
+  }, [note, speech, reportPainText]);
 
   useEffect(() => {
     const SpeechRecognitionCtor =
